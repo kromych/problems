@@ -5,73 +5,28 @@
 
 #include <cstdint>
 #include <array>
-#include <list>
 #include <algorithm>
 #include <iostream>
 
-constexpr   std::size_t             N       = 4;
-const       std::array<double, N>   input   = {4, 1, 1, 4};
+const std::array<unsigned, 4> input = {4, 1, 1, 4};
 
-std::list<unsigned> indices;
-
-template<typename T>
-unsigned get_sum(const std::list<T> l)
+unsigned solution_recursive(signed i)
 {
-    unsigned sum = 0;
-
-    for (const auto& i : l)
+    if (i < 0)
     {
-        sum += input[i];
+        return 0;
     }
 
-    return sum;
-}
-
-template<typename T>
-void print(const std::list<T> l)
-{
-    for (const auto& i : l)
+    if (i == 0)
     {
-        std::cout << "input[" << i << "] = " << input[i] << ' ';
+        return input[0];
     }
 
-    std::cout << std::endl;
-}
-
-unsigned form(unsigned i)
-{
-    unsigned max = 0;
-    unsigned candidate  = 0;
-
-    for (auto j = i; j < N - 2; ++j)
-    {
-        indices.push_back(j + 2);
-
-        candidate = form(j + 2);
-        if (candidate > max)
-        {
-            max = candidate;
-        }
-
-        indices.pop_back();
-    }
-
-    print(indices);
-
-    candidate = get_sum(indices);
-
-    return candidate > max ? candidate : max;
+    return std::max(solution_recursive(i - 1), solution_recursive(i - 2) + input[i]);
 }
 
 int main()
 {
-    for (auto i = 0; i < N; ++i)
-    {
-        indices.push_back(i);
-        auto s = form(i);
-        std::cout << "Sum: " << s << std::endl;
-        indices.pop_back();
-    }
-
+    std::cout << "Max. sum: " << solution_recursive(input.size() - 1) << std::endl;
     return 0;
 }
