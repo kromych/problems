@@ -11,9 +11,15 @@
     Find the maximum sum of non-consecutive (non-adjacent)
     array items.
 ```
-3. [](src/array-sum-num-of-ways.cpp)
+3. [Number of ways to form a number](src/array-sum-num-of-ways.cpp)
 ```
     Given 3 numbers {1, 3, 5}, tell the total number of ways 
     to form a number N using the sum of the given three numbers.
     Repetitions and different arrangements are allowed.
+```
+4. [Longest Increasing Subsequence](src/array-lis.cpp)
+```
+    The Longest Increasing Subsequence (LIS) problem is to find the length of the 
+    longest subsequence of a given sequence such that all elements of the subsequence 
+    are sorted in increasing order.
 ```
