@@ -49,3 +49,12 @@
     and {5,5}.
     So the output should be 5.
 ```
+7. [Longest Common Subsequence](src/lcs.cpp)
+```
+    Given two sequences, find the length of longest subsequence present in both of them.
+```
+8. [Edit Distance](src/edit.cpp)
+```
+    Given two strings, find the minimum number of operations to turn one string into the other one.
+    Operations may be: insert a symbol, remove a symbol, replace a symbol. All operations are of equal cost.
+```
