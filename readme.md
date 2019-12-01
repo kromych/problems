@@ -58,3 +58,7 @@
     Given two strings, find the minimum number of operations to turn one string into the other one.
     Operations may be: insert a symbol, remove a symbol, replace a symbol. All operations are of equal cost.
 ```
+9. [Binary Knapsack](src/knapsack-binary.cpp)
+```
+    Put items of maximum total value in a knapsack of capacity W.
+```
