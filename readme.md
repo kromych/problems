@@ -62,3 +62,7 @@
 ```
     Put items of maximum total value in a knapsack of capacity W.
 ```
+10. [Maximum subarray (Kadane's Alogorithm)](src/kadane.cpp)
+```
+    In an array, find a subarray whose items are of the maximum sum.
+```
