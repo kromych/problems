@@ -16,17 +16,18 @@
 #include <iostream>
 #include <string>
 #include <memory>
+#include <deque>
 
 using namespace std;
 
 
 struct ListNode 
 {
-    int val;
-    ListNode *next;
+	int val;
+	ListNode *next;
 
-    ListNode(int x) : val(x), next(nullptr) {}
-    ~ListNode() { delete next; }
+	ListNode(int x) : val(x), next(nullptr) {}
+	~ListNode() { delete next; }
 };
 
 ostream& operator << (ostream& ost, ListNode* node)
@@ -43,39 +44,41 @@ ostream& operator << (ostream& ost, ListNode* node)
 }
 
 
-ListNode* middleNode(ListNode* head) 
+ListNode* middleNode(ListNode* head)
 {
-    ListNode* slowp = head;
-    ListNode* fastp = head;
+	ListNode* slowp = head;
+	ListNode* fastp = head;
 
-    while (fastp != nullptr)
-    {
-    	slowp = slowp->next;
+	while (fastp != nullptr && fastp->next != nullptr)
+	{
+		fastp = fastp->next->next;
 
-    	if (fastp != nullptr) fastp = fastp->next;
-    	if (fastp != nullptr) fastp = fastp->next;
-    }
+		if (fastp != nullptr)
+		{
+			slowp = slowp->next;
+		}
+	}
 
-    return slowp;
+	return slowp;
 }
 
 void reverseList(ListNode** head) 
 {
-    ListNode* current = *head; 
+	ListNode* current = *head; 
 
-    ListNode* prev = nullptr;
-    ListNode* next = nullptr; 
+	ListNode* prev = nullptr;
+	ListNode* next = nullptr; 
 
-    while (current != nullptr) 
-    { 
-        next = current->next; 
+	while (current != nullptr) 
+	{ 
+		next = current->next; 
 
-        current->next = prev; prev = current; 
+		current->next = prev; prev = current; 
 
-        current = next; 
-    } 
+		current = next; 
+	} 
 
-    *head = prev;
+	*head = prev;
 }
 
 void mergeLists(ListNode* l1, ListNode* l2)
@@ -91,30 +94,73 @@ void mergeLists(ListNode* l1, ListNode* l2)
 		l1p->next = node;
 		node->next = next;
 
-		l1p = l1p->next;
+		l1p = next;
 		l2p = l2p->next;
 	}
 }
 
 void reorderList(ListNode* head) 
 {
-    // Find the middle item 
+	if (head == nullptr)
+	{
+		return;
+	}
+
+	// Find the middle item 
 
 	ListNode* middle = middleNode(head);
 
-    // Cut the tail off
+	// Cut the tail off
 
-    ListNode* tail = middle->next;
-    middle->next = nullptr;
+	ListNode* tail = middle->next;
+	middle->next = nullptr;
 
-    // Reverse the tail
+	// Reverse the tail
 
-    reverseList(&tail);
+	reverseList(&tail);
 
-    // Merge the initial list (just cut in half)
-    // and the tail
+	// Merge
 
-    mergeLists(head, tail);
+	mergeLists(head, tail);
+}
+
+void reorderList1(ListNode* head) 
+{
+	deque<ListNode*> dq;
+	ListNode* trav=head;
+	bool alternate=false;
+	
+	if (!head)
+		return;
+	
+	while(trav) 
+	{
+		dq.push_back(trav);
+		trav=trav->next;
+	} 
+	
+	trav=dq.front();
+	dq.pop_front();
+	
+	while(!dq.empty()) 
+	{
+		if (!alternate) 
+		{
+			trav->next=dq.back();
+			trav=dq.back();
+			dq.pop_back();
+		} 
+		else 
+		{
+			trav->next=dq.front();
+			trav=dq.front();
+			dq.pop_front();
+		}
+
+		alternate=!alternate;
+	}
+
+	trav->next=NULL;
 }
 
 int main()
@@ -132,13 +178,12 @@ int main()
 	l2->next->next->next = new ListNode(4);
 	l2->next->next->next->next = new ListNode(5);
 
-	reverseList(&l1);
-	reverseList(&l2);
-
 	reorderList(l1);
-	reorderList(l2);
 
 	cout << l1 << endl;
+
+	reorderList(l2);
+
 	cout << l2 << endl;
 
 	delete l1;
