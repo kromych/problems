@@ -70,15 +70,38 @@ void reverseList(ListNode** head)
 	ListNode* next = nullptr; 
 
 	while (current != nullptr) 
-	{ 
+	{
+		// Before changing next of current,
+		// store next node		
 		next = current->next; 
 
-		current->next = prev; prev = current; 
+		// Now change next of current
+		// This is where actual reversing happens
+		current->next = prev; 
 
+		// Move prev and curr one step forward
+		prev = current;
 		current = next; 
 	} 
 
 	*head = prev;
+}
+
+void reverseListRecursive(ListNode** head, ListNode* cur)
+{
+	if (cur->next == nullptr)
+	{
+		*head = cur;
+	}
+	else
+	{
+		reverseListRecursive(head, cur->next);
+	}
+}
+
+void reverseList1(ListNode** head) 
+{
+	reverseListRecursive(head, *head);	
 }
 
 void mergeLists(ListNode* l1, ListNode* l2)
